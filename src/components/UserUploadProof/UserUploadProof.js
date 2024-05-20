@@ -23,7 +23,7 @@ function UserUploadProof({ projectId }) {
   useEffect(() => {
     const fetchPendingMilestoneId = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/milestones?projectId=${projectId}&status=pending`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_BASE_URL}/api/milestones?projectId=${projectId}&status=pending`);
         if (response.data.length > 0) {
           const pendingMilestones = response.data;
           const minMilestoneId = Math.min(...pendingMilestones.map(m => m.milestoneId));
@@ -79,7 +79,7 @@ function UserUploadProof({ projectId }) {
       formData.append('otherDocument', file);
       formData.append('currentUser', currentUser);
 
-      const response = await axios.post('http://localhost:3001/api/userApproveMilestones', formData, {
+      const response = await axios.post('http://${process.env.REACT_APP_API_BASE_URL}/api/userApproveMilestones', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
