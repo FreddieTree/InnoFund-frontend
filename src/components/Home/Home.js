@@ -25,6 +25,12 @@ function Home() {
 
   const getUserAddress = async () => {
     try {
+      const existingRequests = await window.ethereum.request({ method: 'wallet_getPermissions' });
+      if (existingRequests.length > 0) {
+        console.log('There is already a pending request');
+        return;
+      }
+
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -41,17 +47,29 @@ function Home() {
   }, []);
 
   const filterMyProjects = useCallback(() => {
+    if (!Array.isArray(projects)) {
+      console.error('projects is not an array:', projects);
+      return [];
+    }
     return projects.filter(project => project.creator.toLowerCase() === userAddress);
   }, [projects, userAddress]);
 
   const filterFundedProjects = useCallback(() => {
+    if (!Array.isArray(projects)) {
+      console.error('projects is not an array:', projects);
+      return [];
+    }
     return projects.filter(project => 
       (project.status.toLowerCase() === 'active' || project.status.toLowerCase() === 'funded') &&
-      project.contributors.some(contributor => contributor.toLowerCase() === userAddress)
+      Array.isArray(project.contributors) && project.contributors.some(contributor => contributor.toLowerCase() === userAddress)
     );
   }, [projects, userAddress]);
 
   const filterActiveAndFundedProjects = useCallback(() => {
+    if (!Array.isArray(projects)) {
+      console.error('projects is not an array:', projects);
+      return [];
+    }
     return projects.filter(project => 
       project.status.toLowerCase() === 'active' || project.status.toLowerCase() === 'funded'
     );
@@ -99,7 +117,6 @@ function Home() {
     });
     setActivePage('projectDetails');
   };
-
 
   const handleSearch = (term) => {
     let projectsToFilter = projects;
