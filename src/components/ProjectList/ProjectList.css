@@ -1,0 +1,33 @@
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.no-projects {
+  text-align: center;
+  color: #999;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+  .project-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .project-list {
+    background-color: #121212;
+  }
+
+  .no-projects {
+    color: #ccc;
+  }
+}

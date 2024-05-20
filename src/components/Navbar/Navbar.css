@@ -1,0 +1,95 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  background-color: #343a40;
+  color: white;
+  z-index: 10; /* Ensure it's on top of other elements */
+  position: fixed; /* Fixed position to stay at the top */
+  width: 100%; /* Full width */
+  box-sizing: border-box;
+}
+
+.navbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.navbar-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right input {
+  padding: 10px;
+  padding-right: 30px; /* Ensure space for the icon */
+  border: none;
+  border-radius: 4px;
+  width: 200px;
+  margin-right: 20px;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  position: absolute;
+  right: 30px;
+  top: 38%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #ccc;
+}
+
+.navbar-bottom {
+  display: flex;
+  padding: 0; /* Remove padding to avoid gaps */
+  margin-top: 0; /* Remove any margin */
+  box-sizing: border-box;
+}
+
+.navbar-bottom button {
+  position: relative;
+  background-color: #FFA500; 
+  color: white;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  flex: 1;
+  box-sizing: border-box;
+  border-bottom: 2px solid transparent;
+  margin: 0;
+}
+
+.navbar-bottom button:hover, 
+.navbar-bottom button:focus {
+  background-color: #FF8C00;
+}
+
+.navbar-bottom button.active {
+  background-color: #FF8C00;
+  border-bottom-color: white;
+}

@@ -1,0 +1,9 @@
+/* src/components/SearchBox/SearchBox.css */
+.search-box {
+  padding: 10px;
+  border: none; /* 移除边框 */
+  border-radius: 4px;
+  font-size: 16px;
+  width: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+}

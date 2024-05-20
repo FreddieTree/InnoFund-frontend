@@ -1,0 +1,24 @@
+/* src/components/MetaMaskInfo/MetaMaskInfo.css */
+.metamask-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .info-item {
+    display: flex;
+    flex-direction: row;
+    margin: 2px 0;
+  }
+  
+  .label {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .value {
+    font-family: monospace; /* Ensure consistent width for address characters */
+  }
+  

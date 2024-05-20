@@ -1,0 +1,158 @@
+.project-card {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.project-card.orange {
+  background-color: #faeed5; /* Light orange */
+}
+
+.project-card.gray {
+  background-color: #adacac; /* Gray for deleted projects */
+}
+
+@media (prefers-color-scheme: dark) {
+  .project-card {
+    background-color: #2e2e2e;
+    color: white;
+    border: 1px solid #333;
+  }
+
+  .project-card.orange {
+    background-color: #e0975c76; /* Deep orange for night mode */
+    color: white;
+  }
+}
+
+.card-header,
+.card-body,
+.card-footer {
+  margin-bottom: 16px;
+}
+
+.card-header {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.project-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.project-id,
+.project-category,
+.project-ddl {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.project-id strong,
+.project-category strong,
+.project-ddl strong {
+  font-weight: bold;
+}
+
+.project-description {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.project-ddl {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.project-ddl .deadline-date {
+  font-weight: normal;
+}
+
+.project-ddl .deadline-date.soon {
+  color: red;
+}
+
+.card-footer {
+  padding-top: 8px;
+  border-top: 1px solid #ddd;
+}
+
+.status-section {
+  margin-top: 16px;
+}
+
+.project-status {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  height: 20px; /* Adjusted for better visibility */
+  background-color: #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress {
+  height: 100%;
+  background-color: #28a745; /* Green for funding progress */
+}
+
+.milestone-section {
+  margin-top: 16px;
+}
+
+.milestone-progress-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.milestone-progress {
+  flex: 1;
+  height: 16px;
+  margin-right: 5px;
+  border-radius: 8px;
+}
+
+.milestone-progress:last-child {
+  margin-right: 0;
+}
+
+.milestone-progress.approved {
+  background-color: green; /* Green for approved milestones */
+}
+
+.milestone-progress.pending {
+  background-color: gray; /* Gray for pending milestones */
+}
+
+.milestone-progress.upcoming {
+  background-color: lightgray; /* Light gray for upcoming milestones */
+}

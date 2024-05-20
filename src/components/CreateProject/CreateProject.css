@@ -1,0 +1,133 @@
+/* src/components/CreateProject/CreateProject.css */
+.create-project-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 110vh; /* 确保占满整个视口高度 */
+  background-color: #f8f9fa; /* 白天模式下的背景色 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  .create-project-container {
+    background-color: #121212; /* 夜间模式下的背景色 */
+  }
+}
+
+.container {
+  width: 70%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: #2e2e2e; /* 深灰色背景 */
+    color: white; /* 白色文字 */
+    border: 1px solid #333;
+  }
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form > div {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #343a40;
+}
+
+@media (prefers-color-scheme: dark) {
+  label {
+    color: #fff;
+  }
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  input, select, textarea {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+  }
+}
+
+textarea {
+  height: 120px;
+  resize: none;
+  overflow-y: auto;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px; /* 按钮之间的间隙 */
+  margin-top: 10px;
+}
+
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #FFA500;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+button:hover {
+  background-color: #FF8C00;
+}
+
+button:disabled {
+  opacity: 0.5; /* 禁用时提高透明度 */
+  cursor: not-allowed;
+}
+
+button[type="button"] {
+  background-color: #FFA500; /* 橙色背景 */
+}
+
+button[type="button"]:hover {
+  background-color: #FF8C00; /* 深橙色背景 */
+}
+
+button[type="button"].disabled {
+  opacity: 0.5; /* 禁用时提高透明度 */
+  cursor: not-allowed;
+}
+
+.timeout-inputs {
+  display: flex;
+  align-items: center;
+}
+
+.timeout-inputs input {
+  width: auto;
+  flex: 1;
+}
+
+.timeout-inputs span {
+  margin: 0 10px;
+}
