@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FundProject from '../FundProject/FundProject';
 import UserUploadProof from '../UserUploadProof/UserUploadProof';
@@ -17,19 +17,18 @@ function ProjectDetails({ project, onClose, activePage }) {
     }
   };
 
-  const fetchMilestones = useCallback(async (projectId) => {
+  const fetchMilestones = async (projectId) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/milestones`, {
         params: { projectId }
       });
       const projectMilestones = response.data.filter(milestone => milestone.projectId === projectId);
-      // 对里程碑按里程碑ID进行排序
       projectMilestones.sort((a, b) => a.milestoneId - b.milestoneId);
       setMilestones(projectMilestones);
     } catch (error) {
       console.error('Error fetching milestones:', error);
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchCurrentUser();
@@ -48,7 +47,7 @@ function ProjectDetails({ project, onClose, activePage }) {
   };
 
   const calculateMilestoneProgress = () => {
-    const approvedMilestones = milestones.filter(milestone => milestone.milestonestatus === 'approved').length;
+    const approvedMilestones = milestones.filter(milestone => milestone.milestonestatus.toLowerCase() === 'approved').length;
     return (approvedMilestones / milestones.length) * 100;
   };
 
@@ -95,7 +94,9 @@ function ProjectDetails({ project, onClose, activePage }) {
                   );
                 })}
               </div>
-              <p className="project-status">Milestone Progress - {milestones.filter(m => m.milestonestatus === 'approved').length} of {milestones.length} approved</p>
+              <p className="project-status">
+                Milestone Progress - {milestones.filter(m => m.milestonestatus.toLowerCase() === 'approved').length} of {milestones.length} approved
+              </p>
             </div>
           )
         )}
