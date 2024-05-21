@@ -26,6 +26,8 @@ function ProjectCard({ id, name, category, description, projectDDL, status, fund
         params: { projectId }
       });
       const projectMilestones = response.data.filter(milestone => milestone.projectId === projectId);
+      // 对里程碑按里程碑ID进行排序
+      projectMilestones.sort((a, b) => a.milestoneId - b.milestoneId);
       setMilestones(projectMilestones);
     } catch (error) {
       console.error('Error fetching milestones:', error);
@@ -85,7 +87,7 @@ function ProjectCard({ id, name, category, description, projectDDL, status, fund
       <div className="card-footer">
         {status.toLowerCase() === 'active' ? (
           <div className="status-section">
-            <p className="project-status">Crowdfunding Project - Raised: {amountRaisedInEther} / {fundingGoalInEther} ETH</p>
+            <p className="project-status">Crowdfunding Raising - {amountRaisedInEther} / {fundingGoalInEther} ETH</p>
             <div className="progress-bar">
               <div className="progress" style={{ width: `${fundingProgress}%` }}></div>
             </div>

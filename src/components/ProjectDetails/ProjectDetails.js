@@ -23,6 +23,8 @@ function ProjectDetails({ project, onClose, activePage }) {
         params: { projectId }
       });
       const projectMilestones = response.data.filter(milestone => milestone.projectId === projectId);
+      // 对里程碑按里程碑ID进行排序
+      projectMilestones.sort((a, b) => a.milestoneId - b.milestoneId);
       setMilestones(projectMilestones);
     } catch (error) {
       console.error('Error fetching milestones:', error);
@@ -68,32 +70,34 @@ function ProjectDetails({ project, onClose, activePage }) {
             </div>
           </div>
         ) : (
-          <div className="milestone-section">
-            <h3>Milestones</h3>
-            <ul>
-              {milestones.map((milestone, index) => (
-                <li key={`${project.projectId}-${milestone.milestoneId}-${index}`}>
-                  <p><strong>Milestone ID:</strong> {milestone.milestoneId + 1}</p>
-                  <p><strong>Description:</strong> {milestone.milestoneDescription}</p>
-                  <p><strong>Document:</strong> <a href={milestone.documentURL} target="_blank" rel="noopener noreferrer">View Document</a></p>
-                </li>
-              ))}
-            </ul>
-            <div className="milestone-progress-container">
-              {milestones.map((milestone, index) => {
-                const milestoneStatus = milestone.milestonestatus;
-                const isApproved = milestoneStatus === 'approved';
-                const isPending = milestoneStatus === 'pending';
-                return (
-                  <div
-                    key={`${project.projectId}-${milestone.milestoneId}-${index}`}
-                    className={`milestone-progress ${isApproved ? 'approved' : isPending ? 'pending' : 'upcoming'}`}
-                  ></div>
-                );
-              })}
+          project.status.toLowerCase() === 'funded' && (
+            <div className="milestone-section">
+              <h3>Milestones</h3>
+              <ul>
+                {milestones.map((milestone, index) => (
+                  <li key={`${project.projectId}-${milestone.milestoneId}-${index}`}>
+                    <p><strong>Milestone ID:</strong> {milestone.milestoneId + 1}</p>
+                    <p><strong>Description:</strong> {milestone.milestoneDescription}</p>
+                    <p><strong>Document:</strong> <a href={milestone.documentURL} target="_blank" rel="noopener noreferrer">View Document</a></p>
+                  </li>
+                ))}
+              </ul>
+              <div className="milestone-progress-container">
+                {milestones.map((milestone, index) => {
+                  const milestoneStatus = milestone.milestonestatus;
+                  const isApproved = milestoneStatus === 'approved';
+                  const isPending = milestoneStatus === 'pending';
+                  return (
+                    <div
+                      key={`${project.projectId}-${milestone.milestoneId}-${index}`}
+                      className={`milestone-progress ${isApproved ? 'approved' : isPending ? 'pending' : 'upcoming'}`}
+                    ></div>
+                  );
+                })}
+              </div>
+              <p className="project-status">Milestone Progress - {milestones.filter(m => m.milestonestatus === 'approved').length} of {milestones.length} approved</p>
             </div>
-            <p className="project-status">Milestone Progress - {milestones.filter(m => m.milestonestatus === 'approved').length} of {milestones.length} approved</p>
-          </div>
+          )
         )}
 
         {project.status.toLowerCase() === 'active' && project.creator.toLowerCase() !== currentUser && (
