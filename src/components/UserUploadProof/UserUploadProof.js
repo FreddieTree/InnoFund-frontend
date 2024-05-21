@@ -23,7 +23,7 @@ function UserUploadProof({ projectId }) {
   useEffect(() => {
     const fetchPendingMilestoneId = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/milestones?projectId=${projectId}&status=pending`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/milestones?projectId=${projectId}&status=pending`);
         if (response.data.length > 0) {
           const pendingMilestones = response.data;
           const minMilestoneId = Math.min(...pendingMilestones.map(m => m.milestoneId));
@@ -33,6 +33,7 @@ function UserUploadProof({ projectId }) {
         }
       } catch (error) {
         console.error('Error fetching pending milestones:', error);
+        setError('Error fetching pending milestones.');
       }
     };
 
@@ -43,9 +44,15 @@ function UserUploadProof({ projectId }) {
     const selectedFile = e.target.files[0];
     const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif'];
     const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+    const maxSizeInMB = 5;
+    const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
 
     if (!allowedExtensions.includes(fileExtension)) {
       setError('Only jpeg, jpg, png, gif files are allowed');
+      setFile(null);
+      setFileName('');
+    } else if (selectedFile.size > maxSizeInBytes) {
+      setError(`File size should not exceed ${maxSizeInMB} MB`);
       setFile(null);
       setFileName('');
     } else {
@@ -70,7 +77,7 @@ function UserUploadProof({ projectId }) {
 
     try {
       setIsSubmitting(true);
-      await axios.post('/api/milestones/upload-status', { projectId, isSubmitting: true });
+      await axios.post(`${process.env.REACT_APP_API_URL}/milestones/upload-status`, { projectId, isSubmitting: true });
 
       const formData = new FormData();
       formData.append('projectId', projectId);
@@ -79,7 +86,7 @@ function UserUploadProof({ projectId }) {
       formData.append('otherDocument', file);
       formData.append('currentUser', currentUser);
 
-      const response = await axios.post('http://localhost:3001/api/userApproveMilestones', formData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/userApproveMilestones`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -92,10 +99,10 @@ function UserUploadProof({ projectId }) {
       setError('');
     } catch (error) {
       console.error('Error uploading milestone proof:', error);
-      setError(`Error: ${error.message}`);
+      setError(`Error uploading milestone proof: ${error.message}`);
     } finally {
       setIsSubmitting(false);
-      await axios.post('/api/milestones/upload-status', { projectId, isSubmitting: false });
+      await axios.post(`${process.env.REACT_APP_API_URL}/milestones/upload-status`, { projectId, isSubmitting: false });
     }
   };
 
