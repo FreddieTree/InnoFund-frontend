@@ -49,7 +49,7 @@ function FundProject({ projectId }) {
 
       // 更新后端数据库
       try {
-        const response = await axios.post('http://localhost:3001/api/projects/fund', {
+        const response = await axios.post('${process.env.REACT_APP_API_URL}/projects/fund', {
           projectId: parseInt(projectId, 10),
           amount: roundedAmount, // 以 eth 为单位发送四舍五入后的金额
           contributor: userAddress
