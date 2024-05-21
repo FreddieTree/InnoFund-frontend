@@ -19,7 +19,7 @@ function ProjectDetails({ project, onClose, activePage }) {
 
   const fetchMilestones = useCallback(async (projectId) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/milestones`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/milestones`, {
         params: { projectId }
       });
       const projectMilestones = response.data.filter(milestone => milestone.projectId === projectId);
