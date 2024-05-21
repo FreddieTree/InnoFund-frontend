@@ -16,13 +16,14 @@ function Home() {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('/api/projects');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/projects`);
       console.log('Fetched projects:', response.data); // 检查返回的数据
       setProjects(Array.isArray(response.data) ? response.data : []); // 确保设置的是数组
     } catch (error) {
       console.error('Error fetching projects:', error);
     }
   };
+  
 
   const getUserAddress = async () => {
     try {

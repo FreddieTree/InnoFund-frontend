@@ -22,7 +22,7 @@ function ProjectCard({ id, name, category, description, projectDDL, status, fund
 
   const fetchMilestones = async (projectId) => {
     try {
-      const response = await axios.get('/api/milestones', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/milestones`, {
         params: { projectId }
       });
       const projectMilestones = response.data.filter(milestone => milestone.projectId === projectId);
