@@ -93,7 +93,7 @@ function CreateProject() {
         milestones,
       };
 
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/projects`, projectData);
+      await axios.post('http://localhost:3001/api/projects', projectData);
 
       const activityData = {
         type: 'Create Project',
@@ -102,7 +102,7 @@ function CreateProject() {
         details: projectData
       };
 
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/activities`, activityData);
+      await axios.post('http://localhost:3001/api/activities', activityData);
 
       alert('Project created successfully');
       resetForm();
