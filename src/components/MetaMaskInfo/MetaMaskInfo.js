@@ -1,4 +1,3 @@
-// src/components/MetaMaskInfo/MetaMaskInfo.js
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import './MetaMaskInfo.css';
@@ -14,9 +13,12 @@ const MetaMaskInfo = ({ onAddressChange }) => {
       const signer = provider.getSigner();
       const userAddress = await signer.getAddress();
       setAddress(userAddress);
-      
+
       const userBalance = await signer.getBalance();
-      setBalance((parseFloat(ethers.utils.formatEther(userBalance))).toFixed(4));
+      console.log('User Balance in Wei:', userBalance.toString()); // 调试日志
+      const formattedBalance = parseFloat(ethers.utils.formatEther(userBalance)).toFixed(4);
+      console.log('Formatted Balance in ETH:', formattedBalance); // 调试日志
+      setBalance(formattedBalance);
 
       if (onAddressChange) {
         onAddressChange(userAddress);
