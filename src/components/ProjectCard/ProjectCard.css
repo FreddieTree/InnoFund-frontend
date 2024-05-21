@@ -113,7 +113,7 @@
 
 .progress-bar {
   height: 20px; /* Adjusted for better visibility */
-  background-color: #e9ecef;
+  background-color: lightgray;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
@@ -145,12 +145,16 @@
   margin-right: 0;
 }
 
+.milestone-progress.pending {
+  background-color: lightgray; /* Light gray for pending milestones */
+}
+
 .milestone-progress.approved {
   background-color: green; /* Green for approved milestones */
 }
 
-.milestone-progress.pending {
-  background-color: lightgray; /* Gray for pending milestones */
+.milestone-progress.submitted {
+  background-color: rgb(255, 183, 49); /* Orange for submitted milestones */
 }
 
 .milestone-progress.upcoming {
