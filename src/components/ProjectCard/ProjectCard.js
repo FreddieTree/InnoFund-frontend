@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ProjectCard.css';
 
-function ProjectCard({ id, name, category, description, projectDDL, status, fundingGoal, amountRaised, onClick, activePage, creator }) {
+function ProjectCard({ id, name, category, description, projectDDL, status, fundingGoal, amountRaised, onClick, creator }) {
   const [milestones, setMilestones] = useState([]);
   const [currentUser, setCurrentUser] = useState('');
 
@@ -57,6 +57,7 @@ function ProjectCard({ id, name, category, description, projectDDL, status, fund
 
   const fundingGoalInEther = (fundingGoal / 10 ** 18).toString();
   const amountRaisedInEther = parseFloat(amountRaised).toString();
+
   const fundingProgress = (parseFloat(amountRaisedInEther) / parseFloat(fundingGoalInEther)) * 100;
 
   const isCreator = creator?.toLowerCase() === currentUser;
@@ -92,14 +93,16 @@ function ProjectCard({ id, name, category, description, projectDDL, status, fund
 
         {status.toLowerCase() === 'funded' && milestones.length > 0 ? (
           <div className="milestone-section">
-            <p className="project-status">Milestone Progress - {milestones.filter(m => m.milestonestatus === 'Approved').length} of {milestones.length} approved</p>
+            <p className="project-status">Milestone Progress - {milestones.filter(m => m.milestonestatus.toLowerCase() === 'approved').length} of {milestones.length} approved</p>
             <div className="milestone-progress-container">
               {milestones.map((milestone, index) => {
                 const milestoneStatus = milestone.milestonestatus.toLowerCase();
+                const isApproved = milestoneStatus === 'approved';
+                const isPending = milestoneStatus === 'pending';
                 return (
                   <div
                     key={`${id}-${milestone.milestoneId}`}
-                    className={`milestone-progress ${milestoneStatus}`}
+                    className={`milestone-progress ${isApproved ? 'approved' : isPending ? 'pending' : 'upcoming'}`}
                   ></div>
                 );
               })}

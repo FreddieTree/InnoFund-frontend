@@ -84,7 +84,7 @@ function ProjectDetails({ project, onClose, activePage }) {
               </ul>
               <div className="milestone-progress-container">
                 {milestones.map((milestone, index) => {
-                  const milestoneStatus = milestone.milestonestatus;
+                  const milestoneStatus = milestone.milestonestatus.toLowerCase();
                   const isApproved = milestoneStatus === 'approved';
                   const isPending = milestoneStatus === 'pending';
                   return (
