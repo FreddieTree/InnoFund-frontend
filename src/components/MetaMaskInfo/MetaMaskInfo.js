@@ -8,16 +8,24 @@ const MetaMaskInfo = ({ onAddressChange }) => {
 
   const getAddressAndBalance = async () => {
     try {
+      if (!window.ethereum) {
+        console.error('MetaMask is not installed');
+        return;
+      }
+      console.log('Requesting MetaMask accounts...');
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const userAddress = await signer.getAddress();
+      console.log('User Address:', userAddress);
       setAddress(userAddress);
 
+      console.log('Fetching balance...');
       const userBalance = await signer.getBalance();
-      console.log('User Balance in Wei:', userBalance.toString()); // 调试日志
+      console.log('getBalance method called'); // 确认方法被调用
+      console.log('User Balance in Wei:', userBalance.toString()); // 确认返回值
       const formattedBalance = parseFloat(ethers.utils.formatEther(userBalance)).toFixed(4);
-      console.log('Formatted Balance in ETH:', formattedBalance); // 调试日志
+      console.log('Formatted Balance in ETH:', formattedBalance); // 确认格式化后的值
       setBalance(formattedBalance);
 
       if (onAddressChange) {
@@ -25,6 +33,7 @@ const MetaMaskInfo = ({ onAddressChange }) => {
       }
     } catch (error) {
       console.error('Error getting user address or balance:', error);
+      console.error('Error details:', error.message); // 输出错误的详细信息
     }
   };
 
@@ -33,14 +42,19 @@ const MetaMaskInfo = ({ onAddressChange }) => {
 
     const handleAccountsChanged = (accounts) => {
       if (accounts.length > 0) {
+        console.log('Accounts changed:', accounts);
         getAddressAndBalance();
       }
     };
 
-    window.ethereum.on('accountsChanged', handleAccountsChanged);
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+    }
 
     return () => {
-      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      }
     };
   }, []);
 
@@ -52,11 +66,11 @@ const MetaMaskInfo = ({ onAddressChange }) => {
     <div className="metamask-info">
       <div className="info-item">
         <span className="label">Address:</span>
-        <span className="value">{formatAddress(address)}</span>
+        <span className="value">{address ? formatAddress(address) : 'N/A'}</span>
       </div>
       <div className="info-item">
         <span className="label">ETH:</span>
-        <span className="value">{balance}</span>
+        <span className="value">{balance || 'N/A'}</span>
       </div>
     </div>
   );

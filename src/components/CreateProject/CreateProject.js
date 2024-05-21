@@ -11,6 +11,7 @@ function CreateProject() {
   const [fundingGoal, setFundingGoal] = useState('');
   const [milestoneGoals, setMilestoneGoals] = useState(['']);
   const [milestoneDeadlines, setMilestoneDeadlines] = useState(['']);
+  const [fundingTimeoutDays, setFundingTimeoutDays] = useState('0');
   const [fundingTimeoutHours, setFundingTimeoutHours] = useState('0');
   const [fundingTimeoutMinutes, setFundingTimeoutMinutes] = useState('0');
   const [isCreating, setIsCreating] = useState(false);
@@ -50,7 +51,16 @@ function CreateProject() {
       const milestoneGoalsInWei = milestoneGoals.map(goal => ethers.utils.parseEther(goal));
       const milestoneDeadlinesInSeconds = milestoneDeadlines.map(deadline => parseInt(deadline, 10) * 86400);
 
-      const fundingTimeoutInSeconds = parseInt(fundingTimeoutHours, 10) * 3600 + parseInt(fundingTimeoutMinutes, 10) * 60;
+      const fundingTimeoutInSeconds = 
+        parseInt(fundingTimeoutDays, 10) * 86400 +
+        parseInt(fundingTimeoutHours, 10) * 3600 +
+        parseInt(fundingTimeoutMinutes, 10) * 60;
+
+      if (fundingTimeoutInSeconds === 0) {
+        alert('Funding timeout cannot be 0.');
+        setIsCreating(false);
+        return;
+      }
 
       const tx = await contract.connect(signer).createProject(
         fundingGoalInWei,
@@ -121,6 +131,7 @@ function CreateProject() {
     setFundingGoal('');
     setMilestoneGoals(['']);
     setMilestoneDeadlines(['']);
+    setFundingTimeoutDays('0');
     setFundingTimeoutHours('0');
     setFundingTimeoutMinutes('0');
   };
@@ -211,9 +222,19 @@ function CreateProject() {
             <div className="timeout-inputs">
               <input
                 type="number"
+                value={fundingTimeoutDays}
+                onChange={(e) => setFundingTimeoutDays(e.target.value)}
+                min="0"
+                required
+                disabled={isCreating}
+              />
+              <span>Days</span>
+              <input
+                type="number"
                 value={fundingTimeoutHours}
                 onChange={(e) => setFundingTimeoutHours(e.target.value)}
                 min="0"
+                max="24"
                 required
                 disabled={isCreating}
               />
