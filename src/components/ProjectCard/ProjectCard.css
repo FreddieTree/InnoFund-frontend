@@ -150,7 +150,7 @@
 }
 
 .milestone-progress.pending {
-  background-color: gray; /* Gray for pending milestones */
+  background-color: lightgray; /* Gray for pending milestones */
 }
 
 .milestone-progress.upcoming {

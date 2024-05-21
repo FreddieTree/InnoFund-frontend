@@ -96,10 +96,10 @@ function ProjectCard({ id, name, category, description, projectDDL, status, fund
 
         {status.toLowerCase() === 'funded' && milestones.length > 0 ? (
           <div className="milestone-section">
-            <p className="project-status">Milestone Progress - {milestones.filter(m => m.milestonestatus === 'approved').length} of {milestones.length} approved</p>
+            <p className="project-status">Milestone Progress - {milestones.filter(m => m.status === 'approved').length} of {milestones.length} approved</p>
             <div className="milestone-progress-container">
               {milestones.map((milestone, index) => {
-                const milestoneStatus = milestone.milestonestatus;
+                const milestoneStatus = milestone.status;
                 const isApproved = milestoneStatus === 'approved';
                 const isPending = milestoneStatus === 'pending';
                 return (
