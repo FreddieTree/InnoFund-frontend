@@ -61,7 +61,6 @@ function ProjectDetails({ project, onClose, activePage }) {
       <a href={fullDocumentURL} target="_blank" rel="noopener noreferrer">View Document</a>
     );
   };
-  
 
   return (
     <div className="project-details-container">
