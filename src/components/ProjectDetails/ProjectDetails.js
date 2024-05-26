@@ -54,12 +54,14 @@ function ProjectDetails({ project, onClose, activePage }) {
   const renderMilestoneImage = (documentURL) => {
     const isImage = /\.(jpeg|jpg|png|gif)$/i.test(documentURL);
     const fullDocumentURL = `${process.env.REACT_APP_API_URL}${documentURL}`;
+    console.log('Full Document URL:', fullDocumentURL); // 打印 URL 进行检查
     return isImage ? (
       <img src={fullDocumentURL} alt="Milestone Document" className="milestone-image" />
     ) : (
       <a href={fullDocumentURL} target="_blank" rel="noopener noreferrer">View Document</a>
     );
   };
+  
 
   return (
     <div className="project-details-container">
