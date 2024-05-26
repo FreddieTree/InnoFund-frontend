@@ -53,7 +53,8 @@ function ProjectDetails({ project, onClose, activePage }) {
 
   const renderMilestoneImage = (documentURL) => {
     const isImage = /\.(jpeg|jpg|png|gif)$/i.test(documentURL);
-    const fullDocumentURL = `${process.env.REACT_APP_API_URL}${documentURL}`;
+    const correctDocumentURL = documentURL.replace('/api', ''); // 确保路径正确
+    const fullDocumentURL = `${process.env.REACT_APP_API_URL}${correctDocumentURL}`;
     console.log('Full Document URL:', fullDocumentURL); // 打印 URL 进行检查
     return isImage ? (
       <img src={fullDocumentURL} alt="Milestone Document" className="milestone-image" />
