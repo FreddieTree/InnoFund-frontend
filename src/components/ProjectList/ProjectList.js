@@ -11,7 +11,7 @@ function ProjectList({ projects, onProjectClick, activePage, currentUser }) {
 
   return (
     <div className="project-list">
-      {projects.map((project) => (
+      {sortedProjects.map((project) => (
         <ProjectCard
           key={project.projectId}
           id={project.projectId}

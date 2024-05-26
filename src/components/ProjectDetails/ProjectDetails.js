@@ -33,7 +33,7 @@ function ProjectDetails({ project, onClose, activePage }) {
   useEffect(() => {
     fetchCurrentUser();
     fetchMilestones(project.projectId);
-  }, [fetchMilestones, project]);
+  }, [project]);
 
   const amountRaisedInEther = parseFloat(project.amountRaised);
   const fundingGoalInEther = project.fundingGoal / 10 ** 18;
@@ -53,10 +53,11 @@ function ProjectDetails({ project, onClose, activePage }) {
 
   const renderMilestoneImage = (documentURL) => {
     const isImage = /\.(jpeg|jpg|png|gif)$/i.test(documentURL);
+    const fullDocumentURL = `${process.env.REACT_APP_API_URL}${documentURL}`;
     return isImage ? (
-      <img src={documentURL} alt="Milestone Document" className="milestone-image" />
+      <img src={fullDocumentURL} alt="Milestone Document" className="milestone-image" />
     ) : (
-      <a href={documentURL} target="_blank" rel="noopener noreferrer">View Document</a>
+      <a href={fullDocumentURL} target="_blank" rel="noopener noreferrer">View Document</a>
     );
   };
 
@@ -86,7 +87,7 @@ function ProjectDetails({ project, onClose, activePage }) {
                   <li key={`${project.projectId}-${milestone.milestoneId}-${index}`}>
                     <p><strong>Milestone ID:</strong> {milestone.milestoneId + 1}</p>
                     <p><strong>Description:</strong> {milestone.milestoneDescription}</p>
-                    <p><strong>Document:</strong> {renderMilestoneImage(milestone.documentURL)}</p>
+                    <p><strong>Document:</strong> {renderMilestoneImage(milestone.otherDocuments)}</p>
                   </li>
                 ))}
               </ul>
