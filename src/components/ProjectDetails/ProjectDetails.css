@@ -111,3 +111,10 @@ li:last-child {
 .milestone-progress.upcoming {
   background-color: lightgray;
 }
+
+.milestone-image {
+  max-width: 100px;
+  max-height: 100px;
+  display: block;
+  margin-top: 10px;
+}

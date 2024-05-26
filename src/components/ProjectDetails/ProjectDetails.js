@@ -51,6 +51,15 @@ function ProjectDetails({ project, onClose, activePage }) {
     return (approvedMilestones / milestones.length) * 100;
   };
 
+  const renderMilestoneImage = (documentURL) => {
+    const isImage = /\.(jpeg|jpg|png|gif)$/i.test(documentURL);
+    return isImage ? (
+      <img src={documentURL} alt="Milestone Document" className="milestone-image" />
+    ) : (
+      <a href={documentURL} target="_blank" rel="noopener noreferrer">View Document</a>
+    );
+  };
+
   return (
     <div className="project-details-container">
       <div className="project-details">
@@ -73,11 +82,11 @@ function ProjectDetails({ project, onClose, activePage }) {
             <div className="milestone-section">
               <h3>Milestones</h3>
               <ul>
-                {milestones.map((milestone, index) => (
+                {milestones.filter(milestone => milestone.milestonestatus.toLowerCase() === 'approved').map((milestone, index) => (
                   <li key={`${project.projectId}-${milestone.milestoneId}-${index}`}>
                     <p><strong>Milestone ID:</strong> {milestone.milestoneId + 1}</p>
                     <p><strong>Description:</strong> {milestone.milestoneDescription}</p>
-                    <p><strong>Document:</strong> <a href={milestone.documentURL} target="_blank" rel="noopener noreferrer">View Document</a></p>
+                    <p><strong>Document:</strong> {renderMilestoneImage(milestone.documentURL)}</p>
                   </li>
                 ))}
               </ul>
